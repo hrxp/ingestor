@@ -11,9 +11,9 @@ const { createReadStream } = require('fs');
 const folderName = 'Archive.zip';
 const pathToExtract = 'unzippedArchive';
 
-const unzipFolder = (zippedFolder, destinationPath) => {
+const unzipFolder = (zippedFolder, destination) => {
   fs.createReadStream(`./${zippedFolder}`).pipe(
-    unzipper.Extract({ path: __dirname + `/${pathToExtract}` })
+    unzipper.Extract({ path: __dirname + `/${destination}` })
   );
 };
 
@@ -31,6 +31,10 @@ class File {
 
           .on('data', chunk => {
             this.fileContents = JSON.parse(chunk.toString());
+          })
+
+          .on('error', err => {
+            reject(err);
           })
 
           .on('close', () => {
@@ -57,7 +61,7 @@ const processFileController = async fileName => {
     const results = await file.readFile();
     return results;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
