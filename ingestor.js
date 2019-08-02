@@ -48,11 +48,11 @@ const filewalker = (dir, done) => {
           switch (fileName) {
             case 'users.json':
               const users = await processFileController(file);
-              state.users.push(users);
+              state.users = users;
               break;
             case 'channels.json':
               const channels = await processFileController(file);
-              state.channels.push(channels);
+              state.channels = channels;
               break;
             case 'integration_logs.json':
               // Do nothing
@@ -71,8 +71,10 @@ const filewalker = (dir, done) => {
   });
 };
 
-filewalker('./unzippedArchive', (err, data) => {
-  if (err) {
-    throw err;
-  }
-});
+// filewalker('./unzippedArchive', (err, data) => {
+//   if (err) {
+//     throw err;
+//   }
+// });
+
+module.exports = { filewalker, state };
