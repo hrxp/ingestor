@@ -9,76 +9,70 @@ const { processFileController } = require('./utils.js');
 
 // Local State
 let state = {};
-state.results = [];
 state.users = [];
 state.channels = [];
 state.messages = [];
 
-const filewalker = async (dir, done) => {
-  // Read the directory (unzipped archive), this is also the recursive function.
-  await fs.readdir(dir, async function(err, list) {
+const filewalker = (dir, done) => {
+  let results = [];
+
+  fs.readdir(dir, (err, list) => {
     // If at any point there is an error, invoke the callback function with the error as the argument
     if (err) return done(err);
 
-    // Check to see if there are any items in the list
-    var pending = list.length;
+    var listLength = list.length;
 
-    // base case # 2, if there are no more items in the list, return
-    if (!pending) return done(null, users, messages, channels);
+    if (!listLength) return done(null, results);
 
-    // For each item in the file list, iterate over the file.
     list.forEach(file => {
-      // Save the relative path of a file in this variable
-      let relativeFilePath = file;
-
-      // Grab the absolute path of a file
+      // The fileName with be an argument in the processFileController.
+      let fileName = file;
+      // The fs.state method requeires the absolute path of a file, we grab that with path.resolve.
       file = path.resolve(dir, file);
-
-      // Grab information about a file
+      // Use fs.state to grab a particular files stats. Essentially, we want to find out if this file is a folder.
       fs.stat(file, async (err, stat) => {
-        // If there are stats and there is a directory for this file(folder), we will push the file/folder into the results array
+        // If directory, execute a recursive call
         if (stat && stat.isDirectory()) {
-          state.results.push(file);
-
-          // If we reach here, we know this file is a directory, and we recuseively call filewalker with the directory
-          filewalker(file, async (err, res) => {
-            state.results = state.results.concat(res);
-            if (!--pending) done(null);
+          // Add directory to array
+          results.push(file);
+          // We know this file is a directory, and we recuseively call filewalker with the directory
+          filewalker(file, (err, res) => {
+            results = results.concat(res);
+            if (!--listLength) done(null, results);
           });
         } else {
-          // /*
-          //  ** Here is where we would read each file and parse the data, there are 4 different cases
-          //  */
-
-          // There are 4 different cases for a file, find the case and insert into the correct array
-          if (relativeFilePath === 'users.json') {
-            let user = await processFileController(file);
-            state.users.push(user);
-          } else if (relativeFilePath === 'channels.json') {
-            let channelResults = await processFileController(file);
-            state.channels.push(channelResults);
-          } else if ((relativeFilePath = 'integration_logs')) {
-            // We are not keeping track of this data?
-          } else {
-            const results = await processFileController(file);
-            state.messages.push(results);
+          /*
+           ** Here is where we would read each file and parse the data, there are 4 different cases
+           */
+          let fileName = path.basename(file);
+          switch (fileName) {
+            case 'users.json':
+              const users = await processFileController(file);
+              state.users.push(users);
+              break;
+            case 'channels.json':
+              const channels = await processFileController(file);
+              state.channels.push(channels);
+              break;
+            case 'integration_logs.json':
+              // Do nothing
+              break;
+            default:
+              const messages = await processFileController(file);
+              state.messages.push(messages);
           }
-          // results.push(file) not sure if we need to add the file to the list here?
 
-          // If there are more items in the list, invoke the callback
-          if (!--pending) {
-            done(null);
-          }
+          results.push(file);
+
+          if (!--listLength) done(null, results);
         }
       });
     });
   });
 };
 
-// Invoke the file walker function
-filewalker(path.resolve('./ingestor'), err => {
+filewalker('./unzippedArchive', (err, data) => {
   if (err) {
     throw err;
   }
-  console.log(state.users);
 });
