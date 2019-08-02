@@ -1,0 +1,30 @@
+{
+  "name": "ingester",
+  "version": "1.0.0",
+  "description": "Ingester for hrxp api archive",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "chai-as-promised": "^7.1.1",
+    "unzipper": "^0.10.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  },
+  "scripts": {
+    "test": "mocha --recursive --watch "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hrxp/ingestor.git"
+  },
+  "author": "hrxp alumni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hrxp/ingestor/issues"
+  },
+  "homepage": "https://github.com/hrxp/ingestor#readme"
+}
