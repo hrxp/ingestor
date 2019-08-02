@@ -11,7 +11,7 @@ const { createReadStream } = require('fs');
 const folderName = 'Archive.zip';
 const pathToExtract = 'unzippedArchive';
 
-const unzipFolder = (zippedFolder, pathToExtract) => {
+const unzipFolder = (zippedFolder, destinationPath) => {
   fs.createReadStream(`./${zippedFolder}`).pipe(
     unzipper.Extract({ path: __dirname + `/${pathToExtract}` })
   );
