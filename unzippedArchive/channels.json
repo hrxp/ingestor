@@ -1,0 +1,143 @@
+[
+  {
+    "id": "CKRM6B3NX",
+    "name": "testChannel1",
+    "created": "1562099228",
+    "creator": "UL57SQPAS",
+    "is_archived": false,
+    "is_general": false,
+    "members": [
+      "UKRMKUGUS",
+      "UKRPNU18A",
+      "UKRQ82CBV",
+      "UKSSY7TKL",
+      "UKUDNUSAX",
+      "UKV68TX5H",
+      "UKWP0C5LH",
+      "UKWQQ641F",
+      "UKWUKCW1Z",
+      "UKXHKEWSW",
+      "UL2KWGLJG",
+      "UL2Q3GPNY",
+      "UL2R71465",
+      "UL33TDZNC",
+      "UL34KAQAH",
+      "UL35VFZ37",
+      "UL37CQ4JH",
+      "UL40U64HW",
+      "UL4E50MUG",
+      "UL4FG00BS",
+      "UL4UYFZ0X",
+      "UL4VBD39D",
+      "UL501LX63",
+      "UL544U03H",
+      "UL57SQPAS",
+      "UL580DML6",
+      "UL59AMC22",
+      "UL5GDKR2A",
+      "UL6F4QBBQ",
+      "UL6UFKS1W",
+      "ULAGQG27Q"
+    ],
+    "topic": {
+      "value": "Non-work banter and water cooler conversation",
+      "creator": "UL57SQPAS",
+      "last_set": "1562099228"
+    },
+    "purpose": {
+      "value": "A place for non-work-related flimflam, faffing, hodge-podge or jibber-jabber you'd prefer to keep out of more focused work-related channels.",
+      "creator": "UL57SQPAS",
+      "last_set": "1562099228"
+    }
+  },
+  {
+    "id": "CL57SR83G",
+    "name": "testChannel2",
+    "created": "1562099228",
+    "creator": "UL57SQPAS",
+    "is_archived": false,
+    "is_general": true,
+    "members": [
+      "UKRMKUGUS",
+      "UKRPNU18A",
+      "UKRQ82CBV",
+      "UKSSY7TKL",
+      "UKUDNUSAX",
+      "UKV68TX5H",
+      "UKWP0C5LH",
+      "UKWQQ641F",
+      "UKWUKCW1Z",
+      "UKXHKEWSW",
+      "UL2KWGLJG",
+      "UL2Q3GPNY",
+      "UL2R71465",
+      "UL33TDZNC",
+      "UL34KAQAH",
+      "UL35VFZ37",
+      "UL37CQ4JH",
+      "UL40U64HW",
+      "UL4E50MUG",
+      "UL4FG00BS",
+      "UL4UYFZ0X",
+      "UL4VBD39D",
+      "UL501LX63",
+      "UL544U03H",
+      "UL57SQPAS",
+      "UL580DML6",
+      "UL59AMC22",
+      "UL5GDKR2A",
+      "UL6F4QBBQ",
+      "UL6UFKS1W",
+      "ULAGQG27Q"
+    ],
+    "topic": {
+      "value": "Company-wide announcements and work-based matters",
+      "creator": "UL57SQPAS",
+      "last_set": "1562099228"
+    },
+    "purpose": {
+      "value": "This channel is for workspace-wide communication and announcements. All members are in this channel.",
+      "creator": "UL57SQPAS",
+      "last_set": "1562099228"
+    }
+  },
+  {
+    "id": "CLDCCTBPE",
+    "name": "testChannel3",
+    "created": "1563059523",
+    "creator": "UL6UFKS1W",
+    "is_archived": false,
+    "is_general": false,
+    "members": [
+      "UKWP0C5LH",
+      "UL2KWGLJG",
+      "UL35VFZ37",
+      "UL4E50MUG",
+      "UL4UYFZ0X",
+      "UL501LX63",
+      "UL544U03H",
+      "UL580DML6",
+      "UL6UFKS1W",
+      "ULAGQG27Q"
+    ],
+    "pins": [
+      {
+        "id": "1563157769.001500",
+        "type": "C",
+        "created": 1563246404,
+        "user": "UL6UFKS1W",
+        "owner": "UL6UFKS1W"
+      }
+    ],
+    "topic": {
+      "value": "Project Lead: <@UL6UFKS1W>; Scrum Master: <@UL4E50MUG>; Code Review Wizard: <@ULAGQG27Q>",
+      "creator": "UL6UFKS1W",
+      "last_set": "1563059690"
+    },
+    "purpose": {
+      "value": "Main channel for the HRX Portal team",
+      "creator": "UL6UFKS1W",
+      "last_set": "1563059524"
+    }
+  }
+]
