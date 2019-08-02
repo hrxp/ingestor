@@ -7,13 +7,12 @@ const path = require('path');
 const unzipper = require('unzipper'); // npm lib used to unzip files
 const { createReadStream } = require('fs');
 
-// async fs reads and unzip files to a directory
-
+// Async fs reads and unzip files to a directory
 const folderName = 'Archive.zip';
 const pathToExtract = 'unzippedArchive';
 
-const unzipFolder = (folderName, pathToExtract) => {
-  fs.createReadStream(`./${folderName}`).pipe(
+const unzipFolder = (zippedFolder, pathToExtract) => {
+  fs.createReadStream(`./${zippedFolder}`).pipe(
     unzipper.Extract({ path: __dirname + `/${pathToExtract}` })
   );
 };
@@ -28,13 +27,13 @@ class File {
   readFile() {
     return new Promise((resolve, reject) => {
       try {
-        fs.createReadStream(__dirname + '/channels.json')
+        fs.createReadStream(this.filename)
 
-          .on('data', function(chunk) {
+          .on('data', chunk => {
             this.fileContents = JSON.parse(chunk.toString());
           })
 
-          .on('close', function() {
+          .on('close', () => {
             resolve(this.fileContents);
           });
       } catch (err) {
@@ -52,11 +51,10 @@ class File {
 
 // Used to control the flow of reading a file.
 const processFileController = async fileName => {
-  let state = {};
-  state.file = new File(fileName);
+  let file = new File(fileName);
   try {
     // Read the file and store in the File object
-    const results = await state.file.readFile();
+    const results = await file.readFile();
     return results;
   } catch (err) {
     console.log(err);
