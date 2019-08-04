@@ -53,8 +53,9 @@ const filewalker = (dir, done) => {
               // Skip over integration logs, we don't need them
               break;
             default:
-              const messages = await processFileController(absolutePath);
-              state.messages.push(messages);
+              let messages = await processFileController(absolutePath);
+
+              state.messages.push(...messages);
           }
 
           results.push(absolutePath);
