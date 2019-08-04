@@ -19,7 +19,7 @@ const filewalker = (dir, done) => {
   fs.readdir(dir, (err, list) => {
     if (err) return done(err);
 
-    var listLength = list.length;
+    let listLength = list.length;
 
     if (!listLength) return done(null, results);
 
@@ -39,7 +39,7 @@ const filewalker = (dir, done) => {
           /*
            ** Here is where we would read each file and parse the data, there are 4 different cases
            */
-          let fileName = path.basename(absolutePath);
+          const fileName = path.basename(absolutePath);
           switch (fileName) {
             case 'users.json':
               const users = await processFileController(absolutePath);
@@ -54,7 +54,6 @@ const filewalker = (dir, done) => {
               break;
             default:
               let messages = await processFileController(absolutePath);
-
               state.messages.push(...messages);
           }
 
