@@ -29,7 +29,6 @@ describe('File Class', () => {
     await expect(newFile.readFile()).to.be.rejected;
   });
 });
-
 describe('fileProcessController Utility', () => {
   it("it should pass in a valid file path and output the file's contentes", async () => {
     const results = await processFileController(testFilePath);
