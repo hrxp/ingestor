@@ -44,8 +44,6 @@ describe('It should return an error if the file directory is incorrect', () => {
     filewalker(badDirectory, (err, data) => {
       if (err) {
         error = true;
-
-        return;
       }
     });
   });
