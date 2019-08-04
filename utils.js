@@ -26,23 +26,19 @@ class File {
   // Read a file and save into the constructor
   readFile() {
     return new Promise((resolve, reject) => {
-      try {
-        fs.createReadStream(this.filename)
+      fs.createReadStream(this.filename)
 
-          .on('data', chunk => {
-            this.fileContents = JSON.parse(chunk.toString());
-          })
+        .on('data', chunk => {
+          this.fileContents = JSON.parse(chunk.toString());
+        })
 
-          .on('error', err => {
-            reject(err);
-          })
+        .on('error', err => {
+          reject(err);
+        })
 
-          .on('close', () => {
-            resolve(this.fileContents);
-          });
-      } catch (err) {
-        reject();
-      }
+        .on('close', () => {
+          resolve(this.fileContents);
+        });
     });
   }
 
