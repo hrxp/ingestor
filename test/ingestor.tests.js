@@ -2,7 +2,7 @@ const expect = require('chai').expect;
 const { filewalker, state } = require('../ingestor.js');
 
 describe('File Walker Ingestor', () => {
-  const testDirectory = './unzippedArchive';
+  const testDirectory = `${__dirname}/testArchive`;
   let testState;
 
   beforeEach(done => {
@@ -15,10 +15,12 @@ describe('File Walker Ingestor', () => {
       done();
     });
   });
+
   it('it should ouput a messages array with a length of 9', () => {
     expect(testState.messages).to.have.lengthOf(3);
     expect(testState.messages[0].text).to.be.equal('testMessage1');
   });
+
   it('it should input a directory and output a state object that has a users key, a channels key, & a messages key', () => {
     expect(testState.users).to.be.an('array');
     expect(testState.channels).to.be.an('array');
