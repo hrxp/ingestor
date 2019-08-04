@@ -17,25 +17,21 @@ const filewalker = (dir, done) => {
   let results = [];
 
   fs.readdir(dir, (err, list) => {
-=    if (err) return done(err);
+    if (err) return done(err);
 
     var listLength = list.length;
 
     if (!listLength) return done(null, results);
 
     list.forEach(file => {
+      const absolutePath = path.resolve(dir, file);
 
-      let fileName = file;
-
-      file = path.resolve(dir, file);
-
-      fs.stat(file, async (err, stat) => {
+      fs.stat(absolutePath, async (err, stat) => {
         // If directory, execute a recursive call
         if (stat && stat.isDirectory()) {
+          results.push(absolutePath);
 
-          results.push(file);
-
-          filewalker(file, (err, res) => {
+          filewalker(absolutePath, (err, res) => {
             results = results.concat(res);
             if (!--listLength) done(null, results);
           });
@@ -43,25 +39,25 @@ const filewalker = (dir, done) => {
           /*
            ** Here is where we would read each file and parse the data, there are 4 different cases
            */
-          let fileName = path.basename(file);
+          let fileName = path.basename(absolutePath);
           switch (fileName) {
             case 'users.json':
-              const users = await processFileController(file);
+              const users = await processFileController(absolutePath);
               state.users = users;
               break;
             case 'channels.json':
-              const channels = await processFileController(file);
+              const channels = await processFileController(absolutePath);
               state.channels = channels;
               break;
             case 'integration_logs.json':
               // Skip over integration logs, we don't need them
               break;
             default:
-              const messages = await processFileController(file);
+              const messages = await processFileController(absolutePath);
               state.messages.push(messages);
           }
 
-          results.push(file);
+          results.push(absolutePath);
 
           if (!--listLength) done(null, results);
         }
