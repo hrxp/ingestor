@@ -17,25 +17,24 @@ const filewalker = (dir, done) => {
   let results = [];
 
   fs.readdir(dir, (err, list) => {
-    // If at any point there is an error, invoke the callback function with the error as the argument
-    if (err) return done(err);
+=    if (err) return done(err);
 
     var listLength = list.length;
 
     if (!listLength) return done(null, results);
 
     list.forEach(file => {
-      // The fileName with be an argument in the processFileController.
+
       let fileName = file;
-      // The fs.state method requeires the absolute path of a file, we grab that with path.resolve.
+
       file = path.resolve(dir, file);
-      // Use fs.state to grab a particular files stats. Essentially, we want to find out if this file is a folder.
+
       fs.stat(file, async (err, stat) => {
         // If directory, execute a recursive call
         if (stat && stat.isDirectory()) {
-          // Add directory to array
+
           results.push(file);
-          // We know this file is a directory, and we recuseively call filewalker with the directory
+
           filewalker(file, (err, res) => {
             results = results.concat(res);
             if (!--listLength) done(null, results);
@@ -55,7 +54,7 @@ const filewalker = (dir, done) => {
               state.channels = channels;
               break;
             case 'integration_logs.json':
-              // Do nothing
+              // Skip over integration logs, we don't need them
               break;
             default:
               const messages = await processFileController(file);
@@ -70,11 +69,5 @@ const filewalker = (dir, done) => {
     });
   });
 };
-
-// filewalker('./unzippedArchive', (err, data) => {
-//   if (err) {
-//     throw err;
-//   }
-// });
 
 module.exports = { filewalker, state };
