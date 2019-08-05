@@ -1,0 +1,25 @@
+[
+  {
+    "client_msg_id": "6F342F0B-04B5-4A2C-B358-34F7797A1EF5",
+    "type": "message",
+    "text": "testMessage3",
+    "user": "UL4VBD39D",
+    "ts": "1562100865.006100",
+    "team": "TKRM6AHJ7",
+    "user_team": "TKRM6AHJ7",
+    "source_team": "TKRM6AHJ7",
+    "user_profile": {
+      "avatar_hash": "112f6220ea83",
+      "image_72": "https://avatars.slack-edge.com/2019-07-09/678058795090_112f6220ea83c7d16656_72.png",
+      "first_name": "Michael",
+      "real_name": "Michael Koo",
+      "display_name": "",
+      "team": "TKRM6AHJ7",
+      "name": "mikekoo2010",
+      "is_restricted": false,
+      "is_ultra_restricted": false
+    },
+    "thread_ts": "1562099719.003700",
+    "parent_user_id": "UL57SQPAS"
+  }
+]
