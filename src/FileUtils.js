@@ -1,15 +1,16 @@
 const fs = require('fs');
 
-export const DEFAULT_FILENAME = 'some string'; // TODO: Filled me in.
+const DEFAULT_FILENAME = 'some string'; // TODO: Filled me in.
 
 class FileUtils {
   constructor() {
     this.fileContents;
-    this.setFileContents(DEFAULT_FILENAME);
+    // this.setFileContents(DEFAULT_FILENAME);
   }
 
   // Read a file and saved its contents into fileContents.
   __setFileContents(filename) {
+    let results;
     return new Promise((resolve, reject) => {
       fs.createReadStream(filename)
         .on('data', chunk => {
@@ -24,30 +25,30 @@ class FileUtils {
     });
   }
 
- getFileContents() {
-   return this.fileContents;
- }
-  
- setFileContents(filename) {
-   const setFileContentsPromise = this.__setFileContents(filename);
-   setFileContentsPromise
-     .then((fileContents) => this.fileContents = fileContents)
-     .catch((err) => {
-       // TODO: Handle error
-     });
- }
-  
- formatUsers(users) {
-   // TODO: Format the inputted Users data.  
- }
-  
- formatChannels(channels) {
-   // TODO: Format the inputted Channels data.  
- }
-  
- formatMessagess(messages) {
-   // TODO: Format the inputted Messages data.  
- }
+  getFileContents() {
+    return this.fileContents;
+  }
+
+  setFileContents(filename) {
+    const setFileContentsPromise = this.__setFileContents(filename);
+    setFileContentsPromise
+      .then(fileContents => (this.fileContents = fileContents))
+      .catch(err => {
+        // TODO: Handle error
+      });
+  }
+
+  formatUsers(users) {
+    // TODO: Format the inputted Users data.
+  }
+
+  formatChannels(channels) {
+    // TODO: Format the inputted Channels data.
+  }
+
+  formatMessagess(messages) {
+    // TODO: Format the inputted Messages data.
+  }
 }
 
 // Reading and parsing from a file is an expensive operation. To ensured the `__setFileContents` method does not

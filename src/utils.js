@@ -4,7 +4,7 @@
 
 const fs = require('fs');
 const unzipper = require('unzipper'); // npm lib used to unzip files
-const File = require('./File').File;
+const fileUtils = require('./FileUtils').fileUtils;
 // Async fs reads and unzip files to a directory
 const folderName = 'Archive.zip';
 const pathToExtract = 'unzippedArchive';
@@ -17,10 +17,15 @@ const unzipFolder = (zippedFolder, destination) => {
 
 // Used to control the flow of reading a file.
 const processFileController = async fileName => {
-  let file = new File(fileName);
   try {
-    // Read the file and store in the File object
-    const results = await file.getFileContents();
+    // Set the file contents
+    fileUtils.setFileContents(fileName);
+
+    // TODO: filter and format data
+
+    // Get the file contents
+    const results = fileUtils.getFileContents();
+
     return results;
   } catch (err) {
     throw err;
