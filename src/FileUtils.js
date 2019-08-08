@@ -1,41 +1,26 @@
 const fs = require('fs');
 
-const DEFAULT_FILENAME = 'some string'; // TODO: Filled me in.
+// export const DEFAULT_FILENAME = 'some string'; // TODO: Filled me in.
 
 class FileUtils {
   constructor() {
-    this.fileContents;
     // this.setFileContents(DEFAULT_FILENAME);
   }
 
   // Read a file and saved its contents into fileContents.
   __setFileContents(filename) {
-    let results;
-    return new Promise((resolve, reject) => {
-      fs.createReadStream(filename)
-        .on('data', chunk => {
-          this.fileContents = JSON.parse(chunk.toString());
-        })
-        .on('close', () => {
-          resolve(this.fileContents);
-        })
-        .on('error', err => {
-          reject(err);
-        });
-    });
+    var contents = fs.readFileSync(filename);
+    this.fileContents = JSON.parse(contents);
+    return;
   }
 
   getFileContents() {
     return this.fileContents;
   }
 
-  setFileContents(filename) {
-    const setFileContentsPromise = this.__setFileContents(filename);
-    setFileContentsPromise
-      .then(fileContents => (this.fileContents = fileContents))
-      .catch(err => {
-        // TODO: Handle error
-      });
+  async setFileContents(filename) {
+    const set = await this.__setFileContents(filename);
+    return;
   }
 
   formatUsers(users) {
