@@ -6,12 +6,10 @@
 const fs = require('fs');
 const path = require('path');
 const { processFileController } = require('./utils.js');
+const fileUtils = require('./FileUtils.js').fileUtils;
 
 // Local State
-let state = {};
-state.users = [];
-state.channels = [];
-state.messages = [];
+const state = { users: null, channels: null, messages: [] };
 
 const filewalker = (dir, done) => {
   let results = [];
@@ -42,18 +40,23 @@ const filewalker = (dir, done) => {
           const fileName = path.basename(absolutePath);
           switch (fileName) {
             case 'users.json':
-              const users = await processFileController(absolutePath);
+              await fileUtils.setFileContents(absolutePath);
+              const users = fileUtils.getFileContents();
               state.users = users;
               break;
             case 'channels.json':
-              const channels = await processFileController(absolutePath);
+              await fileUtils.setFileContents(absolutePath);
+              const channels = fileUtils.getFileContents();
               state.channels = channels;
               break;
             case 'integration_logs.json':
               // Skip over integration logs, we don't need them
               break;
             default:
-              let messages = await processFileController(absolutePath);
+              await fileUtils.setFileContents(absolutePath);
+              // There are multiple files with messages
+              let messages = fileUtils.getFileContents();
+              // Push each messages file into state;
               state.messages.push(...messages);
           }
 
@@ -70,8 +73,8 @@ filewalker(__dirname + '/testArchive', (err, data) => {
   if (err) {
     console.log(err);
   } else {
-    console.log(data);
+    console.log(state.messages);
   }
 });
 
-module.exports = { filewalker, state };
+module.exports = { filewalker };
