@@ -21,12 +21,6 @@ describe('File Walker Ingestor', () => {
     expect(testState.messages[0].text).to.be.equal('testMessage1');
   });
 
-  it('it should input a directory and output a state object that has a users key, a channels key, & a messages key', () => {
-    expect(testState.users).to.be.an('array');
-    expect(testState.channels).to.be.an('array');
-    expect(testState.messages).to.be.an('array');
-  });
-
   it('it should ouput a users array with a length of 2', () => {
     expect(testState.users).to.have.lengthOf(2);
     expect(testState.users[0].id).to.equal('testUser1');
@@ -34,6 +28,7 @@ describe('File Walker Ingestor', () => {
 
   it('it should ouput a channels array with a length of 3', () => {
     expect(testState.channels).to.have.lengthOf(3);
+    expect(testState.channels[0].name).to.equal('testChannel1');
   });
 });
 
@@ -53,4 +48,7 @@ describe('It should return an error if the file directory is incorrect', () => {
   it('it should output an err if the archive directory is incorrect', () => {
     expect(error).to.be.equal(true);
   });
+
+  //TODO: Add tests for the rest of the incorrect cases in the filewalker function
+  //1.
 });
