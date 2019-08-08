@@ -19,12 +19,12 @@ const unzipFolder = (zippedFolder, destination) => {
 const processFileController = async fileName => {
   try {
     // Set the file contents
-    fileUtils.setFileContents(fileName);
+    await fileUtils.setFileContents(fileName);
 
     // TODO: filter and format data
 
     // Get the file contents
-    const results = fileUtils.getFileContents();
+    const results = await fileUtils.getFileContents();
 
     return results;
   } catch (err) {
