@@ -37,6 +37,16 @@ const filewalker = (dir, done) => {
           /*
            ** Here is where we would read each file and parse the data, there are 4 different cases
            */
+
+          // Find out if the file is contents of a channel folder
+          var arr = absolutePath.split('/');
+          let folder = arr[arr.length - 2];
+          let channel;
+          // If the folder is name the testArchive folder name, then the folder is a channel
+          if (folder !== 'testArchive') {
+            channel = folder;
+          }
+
           const fileName = path.basename(absolutePath);
           switch (fileName) {
             case 'users.json':
@@ -56,6 +66,11 @@ const filewalker = (dir, done) => {
               await fileUtils.setFileContents(absolutePath);
               // There are multiple files with messages
               let messages = fileUtils.getFileContents();
+
+              // For each message, add the channel
+              messages.forEach(message => {
+                message.channel = channel;
+              });
               // Push each messages file into state;
               state.messages.push(...messages);
           }
@@ -73,7 +88,7 @@ filewalker(__dirname + '/testArchive', (err, data) => {
   if (err) {
     console.log(err);
   } else {
-    console.log(state.messages);
+    console.log(state);
   }
 });
 
