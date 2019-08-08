@@ -19,8 +19,12 @@ class FileUtils {
   }
 
   async setFileContents(filename) {
-    const set = await this.__setFileContents(filename);
-    return;
+    try {
+      await this.__setFileContents(filename);
+      return;
+    } catch (err) {
+      throw err;
+    }
   }
 
   formatUsers(users) {
