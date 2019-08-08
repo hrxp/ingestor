@@ -84,12 +84,4 @@ const filewalker = (dir, done) => {
   });
 };
 
-filewalker(__dirname + '/testArchive', (err, data) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(state);
-  }
-});
-
-module.exports = { filewalker };
+module.exports = { filewalker, state };
