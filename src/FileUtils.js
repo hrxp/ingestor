@@ -1,11 +1,10 @@
 const fs = require('fs');
+const formatMessagesHelper = require('./messagesUtils');
 
 // export const DEFAULT_FILENAME = 'some string'; // TODO: Filled me in.
 
 class FileUtils {
-  constructor() {
-    // this.setFileContents(DEFAULT_FILENAME);
-  }
+  constructor() {}
 
   // Read a file and saved its contents into fileContents.
   __setFileContents(filename) {
@@ -28,15 +27,34 @@ class FileUtils {
   }
 
   formatUsers(users) {
-    // TODO: Format the inputted Users data.
+    const filteredUsers = users.map(user => {
+      return {
+        id: user.id,
+        profilePhoto: user.profile.image_72,
+        displayName: user.profile.display_name,
+        realName: user.real_name,
+      };
+    });
+    return filteredUsers;
   }
 
   formatChannels(channels) {
     // TODO: Format the inputted Channels data.
+    const filteredChannels = channels.map(channel => {
+      return {
+        id: channel.id,
+        name: channel.name,
+        topic: channel.topic.value,
+        purpose: channel.purpose.value,
+        members: channel.memebers,
+        isArchived: channel.isArchived,
+      };
+    });
+    return filteredChannels;
   }
 
-  formatMessagess(messages) {
-    // TODO: Format the inputted Messages data.
+  formatMessages(messages) {
+    const res = formatMessagesHelper(messages);
   }
 }
 
