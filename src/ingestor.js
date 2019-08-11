@@ -6,12 +6,10 @@
 const fs = require('fs');
 const path = require('path');
 const { processFileController } = require('./utils.js');
+const fileUtils = require('./FileUtils.js').fileUtils;
 
 // Local State
-let state = {};
-state.users = [];
-state.channels = [];
-state.messages = [];
+const state = { users: null, channels: null, messages: [] };
 
 const filewalker = (dir, done) => {
   let results = [];
@@ -39,21 +37,41 @@ const filewalker = (dir, done) => {
           /*
            ** Here is where we would read each file and parse the data, there are 4 different cases
            */
+
+          // Find out if the file is contents of a channel folder
+          var arr = absolutePath.split('/');
+          let folder = arr[arr.length - 2];
+          let channel;
+          // If the folder is name the testArchive folder name, then the folder is a channel
+          if (folder !== 'testArchive') {
+            channel = folder;
+          }
+
           const fileName = path.basename(absolutePath);
           switch (fileName) {
             case 'users.json':
-              const users = await processFileController(absolutePath);
+              await fileUtils.setFileContents(absolutePath);
+              const users = fileUtils.getFileContents();
               state.users = users;
               break;
             case 'channels.json':
-              const channels = await processFileController(absolutePath);
+              await fileUtils.setFileContents(absolutePath);
+              const channels = fileUtils.getFileContents();
               state.channels = channels;
               break;
             case 'integration_logs.json':
               // Skip over integration logs, we don't need them
               break;
             default:
-              let messages = await processFileController(absolutePath);
+              await fileUtils.setFileContents(absolutePath);
+              // There are multiple files with messages
+              let messages = fileUtils.getFileContents();
+
+              // For each message, add the channel
+              messages.forEach(message => {
+                message.channel = channel;
+              });
+              // Push each messages file into state;
               state.messages.push(...messages);
           }
 
