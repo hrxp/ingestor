@@ -18,9 +18,11 @@ describe('File Walker Ingestor', () => {
     });
   });
 
-  it('it should ouput a messages array with a length of 3', () => {
-    expect(testState.messages).to.have.lengthOf(3);
-    expect(testState.messages[0].text).to.be.equal('testMessage1');
+  it('shoud output a messages object that has keys that are channel names and values that is an array of messages', () => {
+    console.log(testState.messages);
+    expect(testState.messages.general[0].text).to.be.equal('testMessage1');
+    expect(testState.messages.random[0].text).to.be.equal('testMessage3');
+    expect(testState.messages[`hrxp-general`][0].text).to.be.equal('testMessage2');
   });
 
   it('it should ouput a users array with a length of 2', () => {
