@@ -9,7 +9,7 @@ const { processFileController } = require('./utils.js');
 const fileUtils = require('./FileUtils.js').fileUtils;
 
 // Local State
-const state = { users: null, channels: null, messages: [] };
+const state = { users: null, channels: null, messages: {} };
 
 const filewalker = (dir, done) => {
   let results = [];
@@ -42,7 +42,7 @@ const filewalker = (dir, done) => {
           var arr = absolutePath.split('/');
           let folder = arr[arr.length - 2];
           let channel;
-          // If the folder is name the testArchive folder name, then the folder is a channel
+          // If the folder is not the testArchive folder name, then the folder is a channel
           if (folder !== 'testArchive') {
             channel = folder;
           }
@@ -67,15 +67,18 @@ const filewalker = (dir, done) => {
               // There are multiple files with messages
               let messages = fileUtils.getFileContents();
 
-              // For each message, add the channel
+              // For each message, add the channel it belongs to
               messages.forEach(message => {
                 message.channel = channel;
               });
 
               const formattedMessages = await fileUtils.formatMessages(messages);
 
-              // Push each messages file into state;
-              state.messages.push(...formattedMessages);
+              if (state.messages.hasOwnProperty(channel)) {
+                state.messages[`${channel}`].push(...formattedMessages);
+              } else {
+                state.messages[`${channel}`] = formattedMessages;
+              }
           }
 
           results.push(absolutePath);
