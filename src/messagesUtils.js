@@ -1,7 +1,4 @@
-// TODO; There might be replies for a thread in different files(days)... What to do here?
 // TODO: Add attachments property and a method to format each attachment.
-// TODO: Maybe not formate each messages reply here...
-// const dummyMessages = require('../dummyMessages.js');
 
 const formatMessagesHelper = messages => {
   const formatFiles = files => {
@@ -141,4 +138,29 @@ const formatMessagesHelper = messages => {
   return test;
 };
 
-module.exports = formatMessagesHelper;
+const findAllThreadReplies = messages => {
+  // Loop through the messages list for each channel and find leftover replies
+  for (let channelMessages in messages) {
+    const channelReplies = [];
+
+    for (let i = 0; i < messages[channelMessages].length; i++) {
+      if (messages[channelMessages][i].type === 'reply') {
+        channelReplies.push(messages[channelMessages][i]);
+        // Remove reply from the channel messages list
+        messages[channelMessages].splice(i, 1);
+      }
+    }
+    // After we find all leftover replies in a channel, we then search for the tread the channel belongs to then push into the threads replies property
+    for (let i = 0; i < channelReplies.length; i++) {
+      // For each reply, iterate thorugh messages[channelMessages] and find matching thread
+      for (let j = 0; j < messages[channelMessages].length; j++) {
+        if (messages[channelMessages][j].ts === channelReplies[i].thread_ts) {
+          messages[channelMessages][j].replies.push(channelReplies[i]);
+        }
+      }
+    }
+  }
+  return messages;
+};
+
+module.exports = { formatMessagesHelper, findAllThreadReplies };
