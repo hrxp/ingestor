@@ -22,6 +22,8 @@ const formatMessagesHelper = messages => {
       ts: reply.ts,
       text: reply.text,
       thread_ts: reply.thread_ts,
+      type: 'reply',
+      channelName: reply.channel,
     };
   };
 
@@ -31,6 +33,7 @@ const formatMessagesHelper = messages => {
       return {
         ts: thread.ts,
         text: thread.text,
+        type: 'thread',
         channelName: thread.channel,
         files: thread.files,
         replies: thread.replies,
@@ -52,6 +55,7 @@ const formatMessagesHelper = messages => {
       return {
         ts: message.ts,
         text: message.text,
+        type: 'message',
         channelName: message.channel,
         files: message.files,
         replies: null,
@@ -60,6 +64,7 @@ const formatMessagesHelper = messages => {
       return {
         ts: message.ts,
         text: message.text,
+        type: 'message',
         channelName: message.channel,
         files: null,
         replies: null,
@@ -77,9 +82,11 @@ const formatMessagesHelper = messages => {
       for (let j = 0; j < replies.length; j++) {
         if (replies[j].ts === threadReplies[i].ts) {
           // Format reply
-          formattedReplies.push(formatReply(replies[j]));
+          formattedReplies.push(replies[j]);
           // Delete reply for the replies list.
           replies.splice(j, 1);
+        } else {
+          replies[j] = formatReply(replies[j]);
         }
       }
     }
@@ -102,7 +109,12 @@ const formatMessagesHelper = messages => {
       }
     }
 
-    // For each thread, find replies and then formate each one
+    // Formate each reply
+    for (let i = 0; i < replies.length; i++) {
+      replies[i] = formatReply(replies[i]);
+    }
+
+    // For each thread, find replies for this file
     for (let i = 0; i < threads.length; i++) {
       let currentThread = threads[i];
       currentThread.replies = repliesHelper(currentThread.replies, replies);
