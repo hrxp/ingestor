@@ -1,8 +1,6 @@
 const fs = require('fs');
 const formatMessagesHelper = require('./messagesUtils');
 
-// export const DEFAULT_FILENAME = 'some string'; // TODO: Filled me in.
-
 class FileUtils {
   constructor() {}
 
@@ -55,6 +53,7 @@ class FileUtils {
 
   formatMessages(messages) {
     const res = formatMessagesHelper(messages);
+    return res;
   }
 }
 
