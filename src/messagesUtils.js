@@ -1,6 +1,6 @@
 // TODO; There might be replies for a thread in different files(days)... What to do here?
 // TODO: Add attachments property and a method to format each attachment.
-// TODO:
+// TODO: Maybe not formate each messages reply here...
 // const dummyMessages = require('../dummyMessages.js');
 
 const formatMessagesHelper = messages => {
@@ -76,9 +76,10 @@ const formatMessagesHelper = messages => {
       // Find reply message
       for (let j = 0; j < replies.length; j++) {
         if (replies[j].ts === threadReplies[i].ts) {
-          // TODO: Delete reply once found
           // Format reply
           formattedReplies.push(formatReply(replies[j]));
+          // Delete reply for the replies list.
+          replies.splice(j, 1);
         }
       }
     }
@@ -116,8 +117,8 @@ const formatMessagesHelper = messages => {
     for (let i = 0; i < regular.length; i++) {
       regular[i] = formatMessage(regular[i]);
     }
-    //TODO Sort the messages in time and return all the of threads and messages
-    const formattedMessages = [...threads, ...regular];
+    // Spread all the different types of messages into a new list, and for any thread replies that are not in the list,  add them here as well.
+    const formattedMessages = [...threads, ...regular, ...replies];
     formattedMessages.sort((a, b) => {
       return a.ts - b.ts;
     });
