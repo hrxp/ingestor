@@ -1,25 +1,85 @@
 [
   {
-    "client_msg_id": "6F342F0B-04B5-4A2C-B358-34F7797A1EF5",
+    "client_msg_id": "d9585ed4-28c4-4a35-9fef-9138c0931b0c",
     "type": "message",
     "text": "testMessage1",
-    "user": "UL4VBD39D",
-    "ts": "1562100865.006100",
-    "team": "TKRM6AHJ7",
-    "user_team": "TKRM6AHJ7",
-    "source_team": "TKRM6AHJ7",
+    "user": "U3Z1JTEDN",
+    "ts": "1518836181.000042",
+    "team": "T035Z8YSZ",
+    "user_team": "T035Z8YSZ",
+    "source_team": "T035Z8YSZ",
     "user_profile": {
-      "avatar_hash": "112f6220ea83",
-      "image_72": "https://avatars.slack-edge.com/2019-07-09/678058795090_112f6220ea83c7d16656_72.png",
-      "first_name": "Michael",
-      "real_name": "Michael Koo",
-      "display_name": "",
-      "team": "TKRM6AHJ7",
-      "name": "mikekoo2010",
+      "avatar_hash": "95d003a60a31",
+      "image_72": "https://avatars.slack-edge.com/2019-04-25/612669784161_95d003a60a31e48c982f_72.jpg",
+      "first_name": "Tre",
+      "real_name": "Tre Ammatuna [HRR20]",
+      "display_name": "TreTuna",
+      "team": "T035Z8YSZ",
+      "name": "tre.ammatuna",
       "is_restricted": false,
       "is_ultra_restricted": false
     },
-    "thread_ts": "1562099719.003700",
-    "parent_user_id": "UL57SQPAS"
+    "edited": {
+      "user": "U3Z1JTEDN",
+      "ts": "1518836274.000000"
+    },
+    "attachments": [
+      {
+        "title": "Front End Masters Pricing",
+        "title_link": "https://frontendmasters.com/enroll/?discounts=hackreactor-alumni",
+        "text": "Stop wasting time searching the web for halfway decent tutorials. Learn straight from experts who shape the modern web.",
+        "fallback": "Front End Masters Pricing",
+        "from_url": "https://frontendmasters.com/enroll/?discounts=hackreactor-alumni",
+        "service_icon": "https://frontendmasters.com/favicon.ico",
+        "service_name": "frontendmasters.com",
+        "id": 1
+      }
+    ],
+    "thread_ts": "1518836181.000042",
+    "reply_count": 1,
+    "reply_users_count": 1,
+    "latest_reply": "1518836812.000054",
+    "reply_users": ["U2FLF4HMZ"],
+    "replies": [
+      {
+        "user": "U2FLF4HMZ",
+        "ts": "1518836812.000054"
+      }
+    ],
+    "subscribed": false,
+    "reactions": [
+      {
+        "name": "moneybag",
+        "users": ["U7Y0NPF8U", "U2FLF4HMZ", "U0EJGHL3G", "U93DEGF8C", "U3ZRXT1TN"],
+        "count": 5
+      },
+      {
+        "name": "100",
+        "users": ["U3ZRXT1TN"],
+        "count": 1
+      }
+    ]
+  },
+  {
+    "type": "message",
+    "text": "testReply1",
+    "user": "U2FLF4HMZ",
+    "ts": "1518836812.000054",
+    "team": "T035Z8YSZ",
+    "user_team": "T035Z8YSZ",
+    "source_team": "T035Z8YSZ",
+    "user_profile": {
+      "avatar_hash": "g805e459b314",
+      "image_72": "https://secure.gravatar.com/avatar/805e459b31480fcbcf134062f79dd8a7.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2F00b63%2Fimg%2Favatars%2Fava_0009-72.png",
+      "first_name": "Jeff",
+      "real_name": "Jeff Berman",
+      "display_name": "jberm",
+      "team": "T035Z8YSZ",
+      "name": "jberm",
+      "is_restricted": false,
+      "is_ultra_restricted": false
+    },
+    "thread_ts": "1518836181.000042",
+    "parent_user_id": "U3Z1JTEDN"
   }
 ]
