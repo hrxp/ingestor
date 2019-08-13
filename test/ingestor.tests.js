@@ -17,7 +17,7 @@ describe('File Walker Ingestor', () => {
   });
 
   it('it should ouput a messages array with a length of 3', () => {
-    expect(testState.messages).to.have.lengthOf(3);
+    expect(testState.messages).to.have.lengthOf(4);
     expect(testState.messages[0].text).to.be.equal('testMessage1');
   });
 
