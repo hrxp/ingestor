@@ -1,5 +1,5 @@
 const fs = require('fs');
-const formatMessagesHelper = require('./messagesUtils');
+const { formatMessagesHelper } = require('./messagesUtils');
 
 class FileUtils {
   constructor() {}
