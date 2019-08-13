@@ -1,0 +1,24 @@
+[
+  {
+    "type": "message",
+    "text": "testReply2DifferentDay",
+    "user": "U2FLF4HMZ",
+    "ts": "1518836812.000111",
+    "team": "T035Z8YSZ",
+    "user_team": "T035Z8YSZ",
+    "source_team": "T035Z8YSZ",
+    "user_profile": {
+      "avatar_hash": "g805e459b314",
+      "image_72": "https://secure.gravatar.com/avatar/805e459b31480fcbcf134062f79dd8a7.jpg?s=72&d=https%3A%2F%2Fa.slack-edge.com%2F00b63%2Fimg%2Favatars%2Fava_0009-72.png",
+      "first_name": "Jeff",
+      "real_name": "Jeff Berman",
+      "display_name": "jberm",
+      "team": "T035Z8YSZ",
+      "name": "jberm",
+      "is_restricted": false,
+      "is_ultra_restricted": false
+    },
+    "thread_ts": "1518836181.000042",
+    "parent_user_id": "U3Z1JTEDN"
+  }
+]
