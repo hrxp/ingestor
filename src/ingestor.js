@@ -1,8 +1,7 @@
 // TODOs
 // We should add the unzipper somewhere in here as well
 // Next step after we've recursed over the archive would be to insert all the parsed data into the data base, aligning data with our mongoDB data model
-// TODO: Fix formate messages...
-//
+// Formate Threads and replies?!?
 const fs = require('fs');
 const path = require('path');
 const { processFileController } = require('./utils.js');
