@@ -4,7 +4,6 @@
 // Formate Threads and replies?!?
 const fs = require('fs');
 const path = require('path');
-const { findAllThreadReplies } = require('./messagesUtils');
 const fileUtils = require('./FileUtils.js').fileUtils;
 
 // Local State
@@ -94,21 +93,5 @@ const filewalker = (dir, done) => {
     });
   });
 };
-
-// This will be the beginning of the invocation of the file walker function...
-// TODO: Refactor into a new method, lets call it arhiveController
-
-// const testDirectory = `${__dirname}/testArchive2`;
-
-// filewalker(testDirectory, (err, data) => {
-//   if (err) {
-//     throw err;
-//   }
-//   state.messages = findAllThreadReplies(state.messages);
-
-//   // insert in the database!!!!!!!!
-
-//   // Now we want use the me
-// });
 
 module.exports = { filewalker, state };
