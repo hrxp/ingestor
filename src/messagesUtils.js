@@ -1,99 +1,98 @@
 // TODO: Add attachments property and a method to format each attachment.
+//TODO: Write tests for each method.
 
-const formatMessagesHelper = messages => {
-  const formatFiles = files => {
-    const formatedFiles = [];
-    for (let i = 0; i < message.files.length; i++) {
-      formatedFiles.push({
-        id: message.files.id,
-        displayName: message.files.username,
-        fileType: message.files.filetype,
-        downloadUrl: message.files.url_private_download,
-      });
-    }
-    return formatedFiles;
+const formatReply = reply => {
+  return {
+    ts: reply.ts,
+    text: reply.text,
+    thread_ts: reply.thread_ts,
+    type: 'reply',
+    channelName: reply.channel,
   };
+};
 
-  const formatReply = reply => {
+const formatThread = thread => {
+  if (thread.files) {
+    thread.files = formatFiles(thread.files);
     return {
-      ts: reply.ts,
-      text: reply.text,
-      thread_ts: reply.thread_ts,
-      type: 'reply',
-      channelName: reply.channel,
+      ts: thread.ts,
+      text: thread.text,
+      type: 'thread',
+      channelName: thread.channel,
+      files: thread.files,
+      replies: thread.replies,
     };
-  };
+  } else {
+    return {
+      ts: thread.ts,
+      text: thread.text,
+      channelName: thread.channel,
+      files: null,
+      replies: thread.replies,
+    };
+  }
+};
 
-  const formatThread = thread => {
-    if (thread.files) {
-      thread.files = formatFiles(thread.files);
-      return {
-        ts: thread.ts,
-        text: thread.text,
-        type: 'thread',
-        channelName: thread.channel,
-        files: thread.files,
-        replies: thread.replies,
-      };
-    } else {
-      return {
-        ts: thread.ts,
-        text: thread.text,
-        channelName: thread.channel,
-        files: null,
-        replies: thread.replies,
-      };
-    }
-  };
+const formatMessage = message => {
+  if (message.files) {
+    message.files = formatFiles(message.files);
+    return {
+      ts: message.ts,
+      text: message.text,
+      type: 'message',
+      channelName: message.channel,
+      files: message.files,
+      replies: null,
+    };
+  } else {
+    return {
+      ts: message.ts,
+      text: message.text,
+      type: 'message',
+      channelName: message.channel,
+      files: null,
+      replies: null,
+    };
+  }
+};
 
-  const formatMessage = message => {
-    if (message.files) {
-      message.files = formatFiles(message.files);
-      return {
-        ts: message.ts,
-        text: message.text,
-        type: 'message',
-        channelName: message.channel,
-        files: message.files,
-        replies: null,
-      };
-    } else {
-      return {
-        ts: message.ts,
-        text: message.text,
-        type: 'message',
-        channelName: message.channel,
-        files: null,
-        replies: null,
-      };
-    }
-  };
+const repliesHelper = (threadReplies, replies) => {
+  const formattedReplies = [];
 
-  const repliesHelper = (threadReplies, replies) => {
-    const formattedReplies = [];
-    let message;
-
-    // A message timestamp and reply timestamp is what connects a reply to a thread.
-    for (let i = 0; i < threadReplies.length; i++) {
-      // Find reply message
-      for (let j = 0; j < replies.length; j++) {
-        if (replies[j].ts === threadReplies[i].ts) {
-          // Format reply
-          formattedReplies.push(replies[j]);
-          // Delete reply for the replies list.
-          replies.splice(j, 1);
-        } else {
-          replies[j] = formatReply(replies[j]);
-        }
+  // A message timestamp and reply timestamp is what connects a reply to a thread.
+  for (let i = 0; i < threadReplies.length; i++) {
+    for (let j = 0; j < replies.length; j++) {
+      if (replies[j].ts === threadReplies[i].ts) {
+        // Format reply
+        formattedReplies.push(replies[j]);
+        // Delete the reply from the replies list.
+        replies.splice(j, 1);
+      } else {
+        replies[j] = formatReply(replies[j]);
       }
     }
-    return formattedReplies;
-  };
+  }
+  return formattedReplies;
+};
 
+const formatFiles = files => {
+  const formatedFiles = [];
+  for (let i = 0; i < message.files.length; i++) {
+    formatedFiles.push({
+      id: message.files.id,
+      displayName: message.files.username,
+      fileType: message.files.filetype,
+      downloadUrl: message.files.url_private_download,
+    });
+  }
+  return formatedFiles;
+};
+
+const formatMessagesHelper = messages => {
   const formatMessages = messages => {
-    let threads = [];
-    let replies = [];
-    let regular = [];
+    const threads = [];
+    const replies = [];
+    const regular = [];
 
     for (let i = 0; i < messages.length; i++) {
       let currentMessage = messages[i];
@@ -134,15 +133,19 @@ const formatMessagesHelper = messages => {
 
     return formattedMessages;
   };
-  const test = formatMessages(messages);
-  return test;
+
+  const completeFormattedMessages = formatMessages(messages);
+  return completeFormattedMessages;
 };
 
+// This utility function will be invoked once there all the messages for every channel are read and formatted.
+// Because replies can be in different files, we will have reply messages left over after we format messages. This fucntion will solve that problem
 const findAllThreadReplies = messages => {
-  // Loop through the messages list for each channel and find leftover replies
+  // Loop through the messages object for each channel
   for (let channelMessages in messages) {
     const channelReplies = [];
 
+    // For each channel, find all left over replies
     for (let i = 0; i < messages[channelMessages].length; i++) {
       if (messages[channelMessages][i].type === 'reply') {
         channelReplies.push(messages[channelMessages][i]);
