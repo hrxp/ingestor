@@ -12,7 +12,7 @@ const channelSchema = new mongoose.Schema({
   isArchived: String,
 });
 
-// Create an instance (document) of the challelSchema
+// Create an instance (document) of the channelSchema
 const Channel = mongoose.model('Channel', channelSchema);
 
 module.exports = {
