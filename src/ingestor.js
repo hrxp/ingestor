@@ -4,7 +4,6 @@
 // Formate Threads and replies?!?
 const fs = require('fs');
 const path = require('path');
-const { processFileController } = require('./utils.js');
 const fileUtils = require('./FileUtils.js').fileUtils;
 
 // Local State
@@ -42,11 +41,12 @@ const filewalker = (dir, done) => {
           let folder = arr[arr.length - 2];
           let channel;
           // The test archive is the entry into the directory, and we know that it is not a channel folder
-          if (folder !== 'testArchive') {
+          if (folder !== 'testArchive2') {
             channel = folder;
           }
 
           const fileName = path.basename(absolutePath);
+          // console.log('folder: ', channel, 'fileName: ', fileName);
           switch (fileName) {
             case 'users.json':
               await fileUtils.setFileContents(absolutePath);
@@ -62,22 +62,26 @@ const filewalker = (dir, done) => {
               // Skip over integration logs, we don't need them
               break;
             default:
-              await fileUtils.setFileContents(absolutePath);
-              // There are multiple files with messages
+              try {
+                await fileUtils.setFileContents(absolutePath);
+                // There are multiple files with messages
 
-              const messages = fileUtils.getFileContents();
+                const messages = await fileUtils.getFileContents();
+                // For each message, add the channel it belongs to
+                messages.forEach(message => {
+                  message.channel = channel;
+                });
 
-              // For each message, add the channel it belongs to
-              messages.forEach(message => {
-                message.channel = channel;
-              });
+                const formattedMessages = await fileUtils.formatMessages(messages);
 
-              const formattedMessages = await fileUtils.formatMessages(messages);
-
-              if (state.messages.hasOwnProperty(channel)) {
-                state.messages[`${channel}`].push(...formattedMessages);
-              } else {
-                state.messages[`${channel}`] = formattedMessages;
+                if (state.messages.hasOwnProperty(channel)) {
+                  state.messages[`${channel}`].push(...formattedMessages);
+                } else {
+                  state.messages[`${channel}`] = formattedMessages;
+                }
+              } catch (err) {
+                console.log(err);
+                throw err;
               }
           }
 

@@ -77,12 +77,12 @@ const repliesHelper = (threadReplies, replies) => {
 
 const formatFiles = files => {
   const formatedFiles = [];
-  for (let i = 0; i < message.files.length; i++) {
+  for (let i = 0; i < files.length; i++) {
     formatedFiles.push({
-      id: message.files.id,
-      displayName: message.files.username,
-      fileType: message.files.filetype,
-      downloadUrl: message.files.url_private_download,
+      id: files[i].id,
+      displayName: files[i].username,
+      fileType: files[i].filetype,
+      downloadUrl: files[i].url_private_download,
     });
   }
   return formatedFiles;

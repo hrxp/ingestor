@@ -44,8 +44,8 @@ class FileUtils {
         name: channel.name,
         topic: channel.topic.value,
         purpose: channel.purpose.value,
-        members: channel.memebers,
-        isArchived: channel.isArchived,
+        members: channel.members,
+        isArchived: channel.is_archived,
       };
     });
     return filteredChannels;
