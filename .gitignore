@@ -67,3 +67,5 @@ node_modules
 /db/config.js
 
 /notes.md
+/src/testArchive
+/testArchive
