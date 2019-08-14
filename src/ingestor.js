@@ -41,7 +41,7 @@ const filewalker = (dir, done) => {
           var arr = absolutePath.split('/');
           let folder = arr[arr.length - 2];
           let channel;
-          // If the folder is not the testArchive folder name, then the folder is a channel
+          // The test archive is the entry into the directory, and we know that it is not a channel folder
           if (folder !== 'testArchive') {
             channel = folder;
           }
@@ -64,7 +64,8 @@ const filewalker = (dir, done) => {
             default:
               await fileUtils.setFileContents(absolutePath);
               // There are multiple files with messages
-              let messages = fileUtils.getFileContents();
+
+              const messages = fileUtils.getFileContents();
 
               // For each message, add the channel it belongs to
               messages.forEach(message => {
