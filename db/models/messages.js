@@ -29,6 +29,7 @@ const Message = mongoose.model('Message', messageSchema);
 module.exports = {
   insertMessages: async channels => {
     try {
+      // channels is an object where each property is a specific channels messages
       for (let messages in channels) {
         await Message.collection.insertMany(channels[messages]);
       }
