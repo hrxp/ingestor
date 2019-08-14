@@ -110,12 +110,6 @@ const formatMessagesHelper = messages => {
       replies[i] = formatReply(replies[i]);
     }
 
-    // For each thread, find replies for this file
-    for (let i = 0; i < threads.length; i++) {
-      let currentThread = threads[i];
-      currentThread.replies = repliesHelper(currentThread.replies, replies);
-    }
-
     // Format each thread
     for (let i = 0; i < threads.length; i++) {
       threads[i] = formatThread(threads[i]);
@@ -125,6 +119,13 @@ const formatMessagesHelper = messages => {
     for (let i = 0; i < regular.length; i++) {
       regular[i] = formatMessage(regular[i]);
     }
+
+    // For each thread, find replies for this file
+    for (let i = 0; i < threads.length; i++) {
+      let currentThread = threads[i];
+      currentThread.replies = repliesHelper(currentThread.replies, replies);
+    }
+
     // Spread all the different types of messages into a new list, and for any thread replies that are not in the list,  add them here as well.
     const formattedMessages = [...threads, ...regular, ...replies];
     formattedMessages.sort((a, b) => {
@@ -149,10 +150,11 @@ const findAllThreadReplies = messages => {
     for (let i = 0; i < messages[channelMessages].length; i++) {
       if (messages[channelMessages][i].type === 'reply') {
         channelReplies.push(messages[channelMessages][i]);
-        // Remove reply from the channel messages list
+        // Remove leftover reply from the channel messages list
         messages[channelMessages].splice(i, 1);
       }
     }
+
     // After we find all leftover replies in a channel, we then search for the tread the channel belongs to then push into the threads replies property
     for (let i = 0; i < channelReplies.length; i++) {
       // For each reply, iterate thorugh messages[channelMessages] and find matching thread
