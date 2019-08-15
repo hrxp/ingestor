@@ -9,11 +9,11 @@ const processArchiveController = async directory => {
     if (err) {
       throw err;
     }
-    // Find thread replies
-    state.messages = findAllThreadReplies(state.messages);
 
     try {
-      // // Insert data into the database
+      // Find the thread leftover replies belong to in each channel.
+      state.messages = findAllThreadReplies(state.messages);
+      // Insert data into the database
       await insertArchiveData(state);
     } catch (err) {
       throw err;
