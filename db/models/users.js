@@ -1,6 +1,3 @@
-// TODOS
-// Figure out how to reference anoter schema in Mongoose
-// Explore populate to use with the reference https://mongoosejs.com/docs/populate.html
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -22,5 +19,4 @@ module.exports = {
       return err;
     }
   },
-  User,
 };
