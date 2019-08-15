@@ -24,5 +24,4 @@ module.exports = {
       return err;
     }
   },
-  Channel,
 };
