@@ -1,5 +1,8 @@
+//TODO: Add test for a thread and replies to a thread
+
 const expect = require('chai').expect;
-const { filewalker, state } = require('../src/ingestor.js');
+const { filewalker, state } = require('../src/fileWalker.js');
+const { findAllThreadReplies } = require('../src/messagesUtils');
 
 describe('File Walker Ingestor', () => {
   const testDirectory = `${__dirname}/testArchive`;
@@ -16,15 +19,14 @@ describe('File Walker Ingestor', () => {
     });
   });
 
-  it('it should ouput a messages array with a length of 3', () => {
-    expect(testState.messages).to.have.lengthOf(3);
-    expect(testState.messages[0].text).to.be.equal('testMessage1');
-  });
-
-  it('it should input a directory and output a state object that has a users key, a channels key, & a messages key', () => {
-    expect(testState.users).to.be.an('array');
-    expect(testState.channels).to.be.an('array');
-    expect(testState.messages).to.be.an('array');
+  it('shoud output a messages object where the properties are channel names and te values is an array of messages', () => {
+    console.log(testState.messages.general);
+    expect(testState.messages.general[0].text).to.be.equal('testMessage1');
+    expect(testState.messages.random[0].text).to.be.equal('testMessage3');
+    expect(testState.messages[`hrxp-general`][0].text).to.be.equal('testMessage2');
+    //TODO: Refactor into it's own test
+    testState.messages = findAllThreadReplies(testState.messages);
+    expect(testState.messages.general[0].replies).to.have.lengthOf(2);
   });
 
   it('it should ouput a users array with a length of 2', () => {
@@ -34,6 +36,7 @@ describe('File Walker Ingestor', () => {
 
   it('it should ouput a channels array with a length of 3', () => {
     expect(testState.channels).to.have.lengthOf(3);
+    expect(testState.channels[0].name).to.equal('testChannel1');
   });
 });
 
@@ -53,4 +56,6 @@ describe('It should return an error if the file directory is incorrect', () => {
   it('it should output an err if the archive directory is incorrect', () => {
     expect(error).to.be.equal(true);
   });
+
+  // TODO: Add tests for the rest of the incorrect cases in the filewalker function
 });
