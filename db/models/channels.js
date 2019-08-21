@@ -9,7 +9,7 @@ const channelSchema = new mongoose.Schema({
   topic: String,
   purpose: { type: String, unique: true, required: true },
   members: [String],
-  isArchived: String,
+  isArchived: Boolean,
 });
 
 // Create an instance (document) of the channelSchema
