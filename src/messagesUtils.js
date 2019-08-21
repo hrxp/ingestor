@@ -2,66 +2,53 @@
 //TODO: Write tests for each method.
 
 const formatReply = reply => {
-  return {
-    user: reply.user,
+  const formattedReply = {
     ts: reply.ts,
     text: reply.text,
     thread_ts: reply.thread_ts,
     type: 'reply',
     channelName: reply.channel,
   };
+
+  if (reply.files) {
+    formatted.files = formatFiles(reply.files);
+    return formattedReply;
+  } else {
+    return formattedReply;
+  }
 };
 
 const formatThread = thread => {
+  const formattedThread = {
+    ts: thread.ts,
+    text: thread.text,
+    type: 'thread',
+    channelName: thread.channel,
+    replies: thread.replies,
+  };
+
   if (thread.files) {
-    thread.files = formatFiles(thread.files);
-    return {
-      user: thread.user,
-      ts: thread.ts,
-      type: 'thread',
-      text: thread.text,
-      type: 'thread',
-      channelName: thread.channel,
-      files: thread.files,
-      replies: thread.replies,
-    };
+    formattedThread.files = formatFiles(thread.files);
+    return formattedThread;
   } else {
-    return {
-      user: thread.user,
-      ts: thread.ts,
-      type: 'thread',
-      text: thread.text,
-      channelName: thread.channel,
-      files: null,
-      replies: thread.replies,
-    };
+    return formattedThread;
   }
 };
 
 const formatMessage = message => {
+  const formattedMessage = {
+    ts: message.ts,
+    text: message.text,
+    type: 'message',
+    channelName: message.channel,
+    replies: null,
+  };
+
   if (message.files) {
-    message.files = formatFiles(message.files);
-    return {
-      user: message.user,
-      ts: message.ts,
-      type: 'message',
-      text: message.text,
-      type: 'message',
-      channelName: message.channel,
-      files: message.files,
-      replies: null,
-    };
+    formattedMessage.files = formatFiles(message.files);
+    return formattedMessage;
   } else {
-    return {
-      user: message.user,
-      ts: message.ts,
-      type: 'message',
-      text: message.text,
-      type: 'message',
-      channelName: message.channel,
-      files: null,
-      replies: null,
-    };
+    return formattedMessage;
   }
 };
 
@@ -72,7 +59,6 @@ const repliesHelper = (threadReplies, replies) => {
   for (let i = 0; i < threadReplies.length; i++) {
     for (let j = 0; j < replies.length; j++) {
       if (replies[j].ts === threadReplies[i].ts) {
-        // Format reply
         formattedReplies.push(replies[j]);
         // Delete the reply from the replies list.
         replies.splice(j, 1);
@@ -81,6 +67,7 @@ const repliesHelper = (threadReplies, replies) => {
       }
     }
   }
+
   return formattedReplies;
 };
 
@@ -94,6 +81,7 @@ const formatFiles = files => {
       downloadUrl: files.url_private_download,
     });
   }
+
   return formatedFiles;
 };
 
@@ -105,6 +93,7 @@ const formatMessagesHelper = messages => {
 
     for (let i = 0; i < messages.length; i++) {
       let currentMessage = messages[i];
+
       if (currentMessage.thread_ts && currentMessage.replies) {
         threads.push(currentMessage);
       } else if (currentMessage.thread_ts) {
@@ -132,11 +121,13 @@ const formatMessagesHelper = messages => {
     // For each thread, find replies for this file
     for (let i = 0; i < threads.length; i++) {
       let currentThread = threads[i];
+
       currentThread.replies = repliesHelper(currentThread.replies, replies);
     }
 
     // Spread all the different types of messages into a new list, and for any thread replies that are not in the list,  add them here as well.
     const formattedMessages = [...threads, ...regular, ...replies];
+
     formattedMessages.sort((a, b) => {
       return a.ts - b.ts;
     });
@@ -145,13 +136,13 @@ const formatMessagesHelper = messages => {
   };
 
   const completeFormattedMessages = formatMessages(messages);
+
   return completeFormattedMessages;
 };
 
 // This utility function will be invoked once there all the messages for every channel are read and formatted.
 // Because replies can be in different files, we will have reply messages left over after we format messages. This fucntion will solve that problem
 const findAllThreadReplies = messages => {
-  // Loop through the messages object for each channel
   for (let channelMessages in messages) {
     const channelReplies = [];
 

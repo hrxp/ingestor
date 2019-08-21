@@ -1,7 +1,7 @@
 //TODO: Add test for a thread and replies to a thread
 
 const expect = require('chai').expect;
-const { filewalker, state } = require('../src/ingestor.js');
+const { filewalker, state } = require('../src/fileWalker.js');
 const { findAllThreadReplies } = require('../src/messagesUtils');
 
 describe('File Walker Ingestor', () => {
@@ -20,6 +20,7 @@ describe('File Walker Ingestor', () => {
   });
 
   it('shoud output a messages object where the properties are channel names and te values is an array of messages', () => {
+    console.log(testState.messages.general);
     expect(testState.messages.general[0].text).to.be.equal('testMessage1');
     expect(testState.messages.random[0].text).to.be.equal('testMessage3');
     expect(testState.messages[`hrxp-general`][0].text).to.be.equal('testMessage2');

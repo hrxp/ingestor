@@ -33,11 +33,11 @@ class FileUtils {
         realName: user.real_name,
       };
     });
+
     return filteredUsers;
   }
 
   formatChannels(channels) {
-    // TODO: Format the inputted Channels data.
     const filteredChannels = channels.map(channel => {
       return {
         id: channel.id,
@@ -48,12 +48,12 @@ class FileUtils {
         isArchived: channel.is_archived,
       };
     });
+
     return filteredChannels;
   }
 
   formatMessages(messages) {
-    const res = formatMessagesHelper(messages);
-    return res;
+    return formatMessagesHelper(messages);
   }
 }
 
