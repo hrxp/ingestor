@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-  id: { type: String, unique: true },
+  slackId: { type: String, unique: true },
   profilePhoto: String,
   displayName: String,
   realName: String,
