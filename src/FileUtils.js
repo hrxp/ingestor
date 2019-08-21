@@ -27,7 +27,7 @@ class FileUtils {
   formatUsers(users) {
     const filteredUsers = users.map(user => {
       return {
-        id: user.id,
+        slackId: user.id,
         profilePhoto: user.profile.image_72,
         displayName: user.profile.display_name,
         realName: user.real_name,
@@ -40,7 +40,7 @@ class FileUtils {
   formatChannels(channels) {
     const filteredChannels = channels.map(channel => {
       return {
-        id: channel.id,
+        slackId: channel.id,
         name: channel.name,
         topic: channel.topic.value,
         purpose: channel.purpose.value,
