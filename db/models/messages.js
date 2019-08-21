@@ -5,6 +5,7 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
+  slackId: String,
   user: String,
   ts: String,
   type: String,
