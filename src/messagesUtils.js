@@ -75,10 +75,10 @@ const formatFiles = files => {
   const formatedFiles = [];
   for (let i = 0; i < files.length; i++) {
     formatedFiles.push({
-      id: files[i].id,
-      displayName: files[i].username,
-      fileType: files[i].filetype,
-      downloadUrl: files[i].url_private_download,
+      id: files.id,
+      displayName: files.username,
+      fileType: files.filetype,
+      downloadUrl: files.url_private_download,
     });
   }
 
@@ -160,6 +160,9 @@ const findAllThreadReplies = messages => {
       // For each reply, iterate thorugh messages[channelMessages] and find matching thread
       for (let j = 0; j < messages[channelMessages].length; j++) {
         if (messages[channelMessages][j].ts === channelReplies[i].thread_ts) {
+          if (messages[channelMessages][j].replies === null) {
+            messages[channelMessages][j].replies = [];
+          }
           messages[channelMessages][j].replies.push(channelReplies[i]);
         }
       }

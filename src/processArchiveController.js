@@ -1,19 +1,23 @@
 const { filewalker, state } = require('./ingestor');
 const { findAllThreadReplies } = require('./messagesUtils');
+const { insertArchiveData } = require('../db/index');
 const testDirectory = `${__dirname}/testArchive`;
 
 // Used to control the flow of reading an archive directory
 const processArchiveController = async directory => {
-  filewalker(directory, (err, data) => {
+  filewalker(directory, async (err, data) => {
     if (err) {
       throw err;
     }
-    // For each channel's messages, find any leftover replies and then add them to the correct thread
-    state.messages = findAllThreadReplies(state.messages);
 
-    // TODO: Insert into the database
-
-    // Now we want use the me
+    try {
+      // Find the thread leftover replies belong to in each channel.
+      state.messages = findAllThreadReplies(state.messages);
+      // Insert data into the database
+      await insertArchiveData(state);
+    } catch (err) {
+      throw err;
+    }
   });
 };
 
