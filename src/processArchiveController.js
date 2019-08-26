@@ -1,4 +1,4 @@
-const { filewalker, state } = require('./ingestor');
+const { filewalker, state } = require('./fileWalker');
 const { findAllThreadReplies } = require('./messagesUtils');
 const { insertArchiveData } = require('../db/index');
 const testDirectory = `${__dirname}/testArchive`;
