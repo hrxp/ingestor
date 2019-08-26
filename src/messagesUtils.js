@@ -11,7 +11,7 @@ const formatReply = reply => {
   };
 
   if (reply.files) {
-    formatted.files = formatFiles(reply.files);
+    formattedReply.files = formatFiles(reply.files);
     return formattedReply;
   } else {
     return formattedReply;
