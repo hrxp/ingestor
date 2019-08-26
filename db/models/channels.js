@@ -4,12 +4,12 @@
 const mongoose = require('mongoose');
 
 const channelSchema = new mongoose.Schema({
-  id: { type: String, unique: true },
+  slackId: { type: String, unique: true },
   name: String,
   topic: String,
   purpose: { type: String, unique: true, required: true },
   members: [String],
-  isArchived: String,
+  isArchived: Boolean,
 });
 
 // Create an instance (document) of the channelSchema

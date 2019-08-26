@@ -5,6 +5,7 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
+  slackId: String,
   user: String,
   ts: String,
   type: String,
@@ -16,7 +17,7 @@ const messageSchema = new mongoose.Schema({
       user: String,
       ts: String,
       type: String,
-      ChannelName: String,
+      channelName: String,
       text: String,
       files: [{ id: String, displayName: String, fileType: String, downloadUrl: String }],
     },
