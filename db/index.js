@@ -20,6 +20,7 @@ const insertArchiveData = state => {
       try {
         // Declaire variables and helper funcions
         const createdByMap = new Map();
+        const channelMap = new Map();
 
         const setChannelMemberIds = async (state, map) => {
           const channels = state.slice();
@@ -46,9 +47,55 @@ const insertArchiveData = state => {
           return channels;
         };
 
+        const setCreatedBy = async (msg, map) => {
+          if (map.has(msg.createdBy)) {
+            msg.createdBy = map.get(msg.createdBy);
+          } else {
+            mongoUserId = await findMongoUserId(msg.createdBy);
+            map.set(msg.createdBy, mongoUserId);
+            msg.createdBy = mongoUserId;
+          }
+          return msg;
+        };
+
+        const setChannelId = async (msg, map) => {
+          if (map.has(msg.channelName)) {
+            msg.channelId = map.get(msg.channelName);
+          } else {
+            channelId = await findChannelId(msg.channelName);
+            map.set(msg.channelName, channelId);
+            msg.channelId = channelId;
+          }
+          return msg;
+        };
+
         await insertUsers(state.users);
 
         await insertChannels(await setChannelMemberIds(state.channels, createdByMap));
+
+        // Because each message only has the archive user id from slack, we will want fetch our mongod user id from the database
+        // Iterate through each channel messages and find the mongoId of the user who created the message
+        let currChannel, currMessage, mongoUserId, j, currReply, replyUserId;
+        for (currChannel in state.messages) {
+          console.log(currChannel);
+          for (k = 0; k < state.messages[currChannel].length; k++) {
+            currMessage = state.messages[currChannel][k];
+
+            currMessage = await setCreatedBy(currMessage, createdByMap);
+
+            currMessage = await setChannelId(currMessage, channelMap);
+            // If a messages has replies, iterate thorugh replies and find user info.
+            if (currMessage.replies) {
+              for (j = 0; j < currMessage.replies.length; j++) {
+                currReply = currMessage.replies[j];
+
+                currReply = await setCreatedBy(currReply, createdByMap);
+
+                currReply = await setChannelId(currMessage, channelMap);
+              }
+            }
+          }
+        }
 
         await insertMessages(state.messages);
 
