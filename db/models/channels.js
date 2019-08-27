@@ -1,14 +1,14 @@
-// TODOS
-// Figure out how to reference anoter schema in Mongoose
-// Explore populate to use with the reference https://mongoosejs.com/docs/populate.html
+// TODO's
+// Write tests
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const channelSchema = new mongoose.Schema({
   slackId: { type: String, unique: true },
   name: String,
   topic: String,
-  purpose: { type: String, unique: true, required: true },
-  members: [String],
+  purpose: String,
+  members: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   isArchived: Boolean,
 });
 
@@ -21,7 +21,19 @@ module.exports = {
       await Channel.collection.insertMany(channels);
       return;
     } catch (err) {
-      return err;
+      console.log(err);
+      throw err;
+    }
+  },
+  findChannelId: async channelName => {
+    try {
+      let results = await Channel.findOne({ name: channelName }, '_id');
+      if (results === null) {
+        return null;
+      }
+      return results._id;
+    } catch (err) {
+      throw err;
     }
   },
 };
