@@ -1,14 +1,16 @@
+//TODO: Add tests for database models and methods
+
 const mongoose = require('mongoose');
 const { mongoURL } = require('./config');
-const { insertChannels } = require('./models/channels');
+const { insertChannels, findChannelId } = require('./models/channels');
 const { insertMessages } = require('./models/messages');
-const { insertUsers } = require('./models/users');
+const { insertUsers, findMongoUserId } = require('./models/users');
 
 const insertArchiveData = state => {
   return new Promise((resolve, reject) => {
     // Make a connection
     mongoose.connect(mongoURL, { useNewUrlParser: true });
-
+    mongoose.set('useCreateIndex', true);
     // Get reference to database
     var db = mongoose.connection;
 
@@ -16,9 +18,37 @@ const insertArchiveData = state => {
 
     db.once('open', async () => {
       try {
-        await insertChannels(state.channels);
+        // Declaire variables and helper funcions
+        const createdByMap = new Map();
+
+        const setChannelMemberIds = async (state, map) => {
+          const channels = state.slice();
+          for (let i = 0; i < channels.length; i++) {
+            if (channels[i].members) {
+              for (let j = 0; j < channels[i].members.length; j++) {
+                console.log('before: ', channels[i].members[j]);
+                channels[i].members[j];
+                if (map.has(channels[i].members[j])) {
+                  channels[i].members[j] = map.get(channels[i].members[j]);
+                } else {
+                  try {
+                    memberId = await findMongoUserId(channels[i].members[j]);
+                    map.set(channels[i].members[j], memberId);
+                    channels[i].members[j] = memberId;
+                  } catch (err) {
+                    throw err;
+                  }
+                }
+                console.log('after: ', channels[i].members[j]);
+              }
+            }
+          }
+          return channels;
+        };
 
         await insertUsers(state.users);
+
+        await insertChannels(await setChannelMemberIds(state.channels, createdByMap));
 
         await insertMessages(state.messages);
 
@@ -27,6 +57,7 @@ const insertArchiveData = state => {
         resolve();
       } catch (err) {
         console.log('Error inserting dummy data: ', err);
+        throw err;
         reject(err);
       }
     });
