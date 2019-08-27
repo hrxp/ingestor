@@ -25,9 +25,9 @@ const insertArchiveData = state => {
         const setChannelMemberIds = async (state, map) => {
           const channels = state.slice();
           for (let i = 0; i < channels.length; i++) {
+            console.log(channels[i]);
             if (channels[i].members) {
               for (let j = 0; j < channels[i].members.length; j++) {
-                console.log('before: ', channels[i].members[j]);
                 channels[i].members[j];
                 if (map.has(channels[i].members[j])) {
                   channels[i].members[j] = map.get(channels[i].members[j]);
@@ -40,7 +40,6 @@ const insertArchiveData = state => {
                     throw err;
                   }
                 }
-                console.log('after: ', channels[i].members[j]);
               }
             }
           }
@@ -69,7 +68,7 @@ const insertArchiveData = state => {
           return msg;
         };
 
-        await insertUsers(state.users);
+        // await insertUsers(state.users);
 
         await insertChannels(await setChannelMemberIds(state.channels, createdByMap));
 
