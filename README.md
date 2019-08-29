@@ -6,14 +6,15 @@ Slack archive ingester for the HRX Portal
 
 - [Requirements](#requirements)
 - [Getting Started](#getting-started)
-- [SRC Files](#src-files)
+- [Files](#files)
+  - [SRC Files](#src-files)
 
 # Getting Started
 
 - Insert unzipped archive in the src folder
 - Rename the directory variable to the unzipped archive name in the processArchiveController.js file
 - Run `npm i` from the command line
-- copy the file at /db/config.example.js -> config.js and fill in the database information
+- Copy the file at /db/config.example.js -> and rename it to config.js. Then fill in the database string URI variable
 - Run `npm ingest`
 
 # Requirements
@@ -23,7 +24,9 @@ To get this project setup, you will need:
 - [Node.js](https://nodejs.org/en/)
 - [NPM](https://www.npmjs.com/get-npm)
 
-## SRC Files
+# Files
+
+## Src Files
 
 | Name                              | Description                                                                       |
 | --------------------------------- | --------------------------------------------------------------------------------- |
@@ -40,4 +43,4 @@ To get this project setup, you will need:
 ## Contributers
 
 - [**John Sprague** - Software Engineer](https://linkedin.com/in/spraguejdev)
-- [**Kyly Shockey** - Software Engineer](https://www.linkedin.com/in/kyleshockey/)
+- [**Kyle Shockey** - Software Engineer](https://www.linkedin.com/in/kyleshockey/)
