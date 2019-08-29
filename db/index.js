@@ -22,6 +22,8 @@ const insertArchiveData = state => {
         const createdByMap = new Map();
         const channelMap = new Map();
 
+        // Add functionality to iterate through the channel list, for each channel, iterate through the member's list, and for each member, find the mongo obj id associated with that member, then update the member id. This will allow the API to populate the user obj associated with each member.
+        // Also, we will now have a map of almost all of the users. This will come in handy below when we will be stting a messages createdBy property.
         const setChannelMemberIds = async (state, map) => {
           const channels = state.slice();
           for (let i = 0; i < channels.length; i++) {
@@ -46,7 +48,7 @@ const insertArchiveData = state => {
           return channels;
         };
 
-        const setCreatedBy = async (msg, map) => {
+        const setMsgCreatedBy = async (msg, map) => {
           if (map.has(msg.createdBy)) {
             msg.createdBy = map.get(msg.createdBy);
           } else {
@@ -72,15 +74,16 @@ const insertArchiveData = state => {
 
         await insertChannels(await setChannelMemberIds(state.channels, createdByMap));
 
-        // Because each message only has the archive user id from slack, we will want fetch our mongod user id from the database
-        // Iterate through each channel messages and find the mongoId of the user who created the message
+        // Because each message only has the archive user id from slack, we will want fetch our mongod user id from the database or the map.
+        // By haveing the mongo obj is of the user will allow the api to populate the user associated with creating a message
+        // Iterate through each channel messages and find the mongoId of the user who created the message.
         let currChannel, currMessage, mongoUserId, j, currReply, replyUserId;
         for (currChannel in state.messages) {
           console.log(currChannel);
           for (k = 0; k < state.messages[currChannel].length; k++) {
             currMessage = state.messages[currChannel][k];
 
-            currMessage = await setCreatedBy(currMessage, createdByMap);
+            currMessage = await setMsgCreatedBy(currMessage, createdByMap);
 
             currMessage = await setChannelId(currMessage, channelMap);
             // If a messages has replies, iterate thorugh replies and find user info.
@@ -88,7 +91,7 @@ const insertArchiveData = state => {
               for (j = 0; j < currMessage.replies.length; j++) {
                 currReply = currMessage.replies[j];
 
-                currReply = await setCreatedBy(currReply, createdByMap);
+                currReply = await setMsgCreatedBy(currReply, createdByMap);
 
                 currReply = await setChannelId(currMessage, channelMap);
               }
