@@ -3,7 +3,7 @@
     "client_msg_id": "d9585ed4-28c4-4a35-9fef-9138c0931b0c",
     "type": "message",
     "text": "testMessage1",
-    "user": "U3Z1JTEDN",
+    "user": "testUser1",
     "ts": "1518836181.000042",
     "team": "T035Z8YSZ",
     "user_team": "T035Z8YSZ",
@@ -42,7 +42,7 @@
     "reply_users": ["U2FLF4HMZ"],
     "replies": [
       {
-        "user": "U2FLF4HMZ",
+        "user": "testUser2",
         "ts": "1518836812.000054"
       }
     ],
@@ -63,7 +63,7 @@
   {
     "type": "message",
     "text": "testReply1",
-    "user": "U2FLF4HMZ",
+    "user": "testUser2",
     "ts": "1518836812.000054",
     "team": "T035Z8YSZ",
     "user_team": "T035Z8YSZ",

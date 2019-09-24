@@ -1,25 +1,25 @@
 // TODOS
-// Figure out how to reference anoter schema in Mongoose
-// Explore populate to use with the reference https://mongoosejs.com/docs/populate.html
-// TODO: user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+// Add tests for a message with a file property a
+
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-  slackId: String,
-  user: String,
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   ts: String,
   type: String,
   text: String,
   channelName: String,
-  files: [{ id: String, displayName: String, fileType: String, downloadUrl: String }],
+  channelId: String,
+  files: [{ slackId: String, displayName: String, fileType: String, downloadUrl: String }],
   replies: [
     {
-      user: String,
+      createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       ts: String,
       type: String,
       channelName: String,
+      channelId: String,
       text: String,
-      files: [{ id: String, displayName: String, fileType: String, downloadUrl: String }],
+      files: [{ slackId: String, displayName: String, fileType: String, downloadUrl: String }],
     },
   ],
 });
@@ -36,7 +36,8 @@ module.exports = {
       }
       return;
     } catch (err) {
-      return err;
+      console.log(err);
+      throw err;
     }
   },
 };

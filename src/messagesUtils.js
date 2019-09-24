@@ -3,7 +3,7 @@
 
 const formatReply = reply => {
   const formattedReply = {
-    slackId: reply.id,
+    createdBy: reply.user,
     ts: reply.ts,
     text: reply.text,
     thread_ts: reply.thread_ts,
@@ -21,7 +21,7 @@ const formatReply = reply => {
 
 const formatThread = thread => {
   const formattedThread = {
-    slackId: thread.id,
+    createdBy: thread.user,
     ts: thread.ts,
     text: thread.text,
     type: 'thread',
@@ -39,7 +39,7 @@ const formatThread = thread => {
 
 const formatMessage = message => {
   const formattedMessage = {
-    slackId: message.id,
+    createdBy: message.user,
     ts: message.ts,
     text: message.text,
     type: 'message',
@@ -78,7 +78,7 @@ const formatFiles = files => {
   const formatedFiles = [];
   for (let i = 0; i < files.length; i++) {
     formatedFiles.push({
-      slackId: files.id,
+      slackId: files.file_id,
       displayName: files.username,
       fileType: files.filetype,
       downloadUrl: files.url_private_download,
