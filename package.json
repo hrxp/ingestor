@@ -16,7 +16,8 @@
     "mocha": "^6.2.0"
   },
   "scripts": {
-    "test": "mocha --recursive --watch "
+    "test": "mocha --recursive --watch ",
+    "ingest": "node run src/processArchiveController.js"
   },
   "repository": {
     "type": "git",

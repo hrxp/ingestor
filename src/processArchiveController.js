@@ -1,7 +1,7 @@
 const { filewalker, state } = require('./fileWalker');
 const { findAllThreadReplies } = require('./messagesUtils');
 const { insertArchiveData } = require('../db/index');
-const testDirectory = `${__dirname}/testArchive`;
+const archiveDirectory = `${__dirname}/:archiveName`;
 
 // Used to control the flow of reading an archive directory
 const processArchiveController = async directory => {
@@ -21,4 +21,4 @@ const processArchiveController = async directory => {
   });
 };
 
-processArchiveController(testDirectory);
+processArchiveController(archiveDirectory);
